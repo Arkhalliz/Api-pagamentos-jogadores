@@ -1,10 +1,14 @@
 package dw.pagamento.model;
 
+import java.util.ArrayList;
+
+import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Table(name = "jogador")
@@ -12,7 +16,7 @@ public class Jogador {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long cod_jogador;
 
     @Column(nullable = false, length = 60)
     private String nome;
@@ -23,15 +27,29 @@ public class Jogador {
     @Column(nullable = false, length = 8)
     private String datanasc;
 
+    @OneToMany(mappedBy = "pagamento")
+    private ArrayList<Pagamento> pagamentos;
+
+    
+
+
     // Getters e setters
 
 
-    public long getId() {
-        return this.id;
+    public ArrayList<Pagamento> getPagamentos() {
+        return this.pagamentos;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setPagamentos(ArrayList<Pagamento> pagamentos) {
+        this.pagamentos = pagamentos;
+    }
+
+    public long getCodJogador() {
+        return this.cod_jogador;
+    }
+
+    public void setCodJogador(long id) {
+        this.cod_jogador = id;
     }
 
     public String getNome() {
@@ -64,11 +82,10 @@ public class Jogador {
 
     }
 
-    public Jogador(String nome, String email, String datanasc) {
+    public Jogador(String nome, String email, String datanasc, ArrayList<Pagamento> pagamentos) {
         this.nome = nome;
         this.email = email;
         this.datanasc = datanasc;
+        this.pagamentos = pagamentos;
     }
-
-
 }
